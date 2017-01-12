@@ -32,16 +32,16 @@ describe('Etherpad line attribute tests', function() {
       var $lineThatShouldHaveAnotherType = inner$('div').slice(1,2);
       var $lineThatShouldHaveOneType = $lineThatShouldHaveAnotherType.next();
 
-      expect($lineThatShouldHaveOneType.find(ONE_TYPE).length).to.be(1);
-      expect($lineThatShouldHaveAnotherType.find(ANOTHER_TYPE).length).to.be(1);
+      expect($lineThatShouldHaveOneType.find(BIG_FONT).length).to.be(1);
+      expect($lineThatShouldHaveAnotherType.find(TINY_FONT).length).to.be(1);
 
       done();
     });
   });
 
   /* ********************** Helper functions ************************ */
-  var ONE_TYPE = 'line_attrib1';
-  var ANOTHER_TYPE = 'line_attrib2';
+  var BIG_FONT = 'big_font';
+  var TINY_FONT = 'tiny_font';
 
   var cleanPad = function(done) {
     var inner$ = helper.padInner$;
@@ -71,8 +71,8 @@ describe('Etherpad line attribute tests', function() {
 
   var padContent = function() {
     var pad = '<br>'
-            + '<' + ONE_TYPE + '>Line with one type</' + ONE_TYPE + '><br>'
-            + '<' + ANOTHER_TYPE + '>Line with another type</' + ANOTHER_TYPE + '><br>'
+            + '<' + BIG_FONT + '>Line with one type</' + BIG_FONT + '><br>'
+            + '<' + TINY_FONT + '>Line with another type</' + TINY_FONT + '><br>'
             + '<br>';
     return pad;
   }

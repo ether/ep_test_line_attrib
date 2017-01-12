@@ -4,7 +4,7 @@ exports.collectContentPre = function(hook, context) {
 
   if(tagName === 'div' || tagName === 'p'){
     delete lineAttributes['test_line_attrib'];
-  } else if(tagName === 'line_attrib1' || tagName === 'line_attrib2') {
+  } else if(tagName === 'big_font' || tagName === 'tiny_font') {
     lineAttributes['test_line_attrib'] = tagName;
   }
 };

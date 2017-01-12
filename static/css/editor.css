@@ -1,9 +1,9 @@
-line_attrib1 {
+big_font {
   font-size: 2.0em;
   line-height: 120%;
 }
 
-line_attrib2 {
+tiny_font {
   font-size: 0.5em;
   line-height: 120%;
 }
