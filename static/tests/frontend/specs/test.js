@@ -11,37 +11,48 @@ describe('Etherpad line attribute tests', function() {
 
   context('when user moves one line into the first position of another', function() {
     before(function(done) {
-      var inner$ = helper.padInner$;
-
-      var $lineWithOneType = inner$('div').slice(1,2);
-      var $lineWithAnotherType = $lineWithOneType.next();
+      var $lineWithBigFont = getLine(LINE_WITH_BIG_FONT_BEFORE_MOVE);
+      var $lineWithTinyFont = getLine(LINE_WITH_TINY_FONT_BEFORE_MOVE);
 
       // insert one line into the beginning of the other
-      $lineWithOneType.prepend($lineWithAnotherType);
+      $lineWithBigFont.prepend($lineWithTinyFont);
 
       // wait for Etherpad to finish processing the lines
       helper.waitFor(function() {
-        var oneDivInsideAnother = inner$('div div').length === 0;
+        var oneDivInsideAnother = helper.padInner$('div div').length === 0;
         return oneDivInsideAnother;
       }, 2000).done(done);
     });
 
     it('processes each line without changing any of their types', function(done) {
-      var inner$ = helper.padInner$;
+      var $lineThatShouldBeBig = getLine(LINE_WITH_BIG_FONT_AFTER_MOVE);
+      var $lineThatShouldBeTiny = getLine(LINE_WITH_TINY_FONT_AFTER_MOVE);
 
-      var $lineThatShouldHaveAnotherType = inner$('div').slice(1,2);
-      var $lineThatShouldHaveOneType = $lineThatShouldHaveAnotherType.next();
-
-      expect($lineThatShouldHaveOneType.find(BIG_FONT).length).to.be(1);
-      expect($lineThatShouldHaveAnotherType.find(TINY_FONT).length).to.be(1);
+      expect($lineThatShouldBeBig.find(BIG_FONT).length).to.be(1);
+      expect($lineThatShouldBeTiny.find(TINY_FONT).length).to.be(1);
 
       done();
     });
   });
 
   /* ********************** Helper functions ************************ */
-  var BIG_FONT = 'big_font';
+  var BIG_FONT  = 'big_font';
   var TINY_FONT = 'tiny_font';
+
+  var LINE_WITH_BIG_FONT_BEFORE_MOVE  = 1;
+  var LINE_WITH_TINY_FONT_BEFORE_MOVE = LINE_WITH_BIG_FONT_BEFORE_MOVE + 1;
+
+  // line with tiny font will be moved to the position of line with big font
+  var LINE_WITH_TINY_FONT_AFTER_MOVE = LINE_WITH_BIG_FONT_BEFORE_MOVE;
+  var LINE_WITH_BIG_FONT_AFTER_MOVE  = LINE_WITH_TINY_FONT_AFTER_MOVE + 1;
+
+  var padContent = function() {
+    var pad = '<br>'
+            + '<' + BIG_FONT + '>Big line</' + BIG_FONT + '><br>'
+            + '<' + TINY_FONT + '>Tiny line</' + TINY_FONT + '><br>'
+            + '<br>';
+    return pad;
+  }
 
   var cleanPad = function(done) {
     var inner$ = helper.padInner$;
@@ -69,12 +80,8 @@ describe('Etherpad line attribute tests', function() {
     }, 2000).done(done);
   }
 
-  var padContent = function() {
-    var pad = '<br>'
-            + '<' + BIG_FONT + '>Line with one type</' + BIG_FONT + '><br>'
-            + '<' + TINY_FONT + '>Line with another type</' + TINY_FONT + '><br>'
-            + '<br>';
-    return pad;
+  var getLine = function(lineNumber) {
+    return helper.padInner$('div').slice(lineNumber, lineNumber + 1);
   }
 
 });
