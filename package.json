@@ -12,9 +12,9 @@
     "node": "*"
   },
   "license": "Apache-2.0",
-  "homepage": "https://github.com/storytouch/ep_test_line_attrib",
+  "homepage": "https://github.com/ether/ep_test_line_attrib",
   "repository": {
     "type": "git",
-    "url": "git://github.com/storytouch/ep_test_line_attrib.git"
+    "url": "git://github.com/ether/ep_test_line_attrib.git"
   }
 }
