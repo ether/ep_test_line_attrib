@@ -1,6 +1,8 @@
 describe('Etherpad line attribute tests', function() {
+  var padId;
+
   before(function(done) {
-    helper.newPad(function() {
+    padId = helper.newPad(function() {
       cleanPad(function() {
         createPad(done);
       });
@@ -32,6 +34,51 @@ describe('Etherpad line attribute tests', function() {
       expect($lineThatShouldBeTiny.find(TINY_FONT).length).to.be(1);
 
       done();
+    });
+  });
+
+  // test the same scenario of authorship_of_editions.js (@ Etherpad tests)
+  context('when more than one author edits a line with line attribute', function() {
+    before(function(done) {
+      // clean this user info on cookie, so when we refresh it will look like we're someone else
+      removeUserInfo();
+
+      // Reload pad, to make changes as a second user.
+      helper.newPad(done, padId);
+
+      this.timeout(60000);
+    });
+
+    it('marks only the new content as changes of the second user', function(done) {
+      var textChange = 'x';
+      var lineNumber = LINE_WITH_BIG_FONT_AFTER_MOVE;
+
+      // get original author class
+      var classes = getLine(lineNumber).find('span').first().attr('class').split(' ');
+      var originalAuthor = getAuthorFromClassList(classes);
+
+      // make change on target line
+      var $regularLine = getLine(lineNumber);
+      helper.selectLines($regularLine, $regularLine, 2, 2); // place caret after 2nd char of line
+      $regularLine.sendkeys(textChange);
+
+      // wait for change to be processed by Etherpad
+      var otherAuthorsOfLine;
+      helper.waitFor(function() {
+        var authorsOfLine = getLine(lineNumber).find('span').map(function() {
+          return getAuthorFromClassList($(this).attr('class').split(' '));
+        }).get();
+        otherAuthorsOfLine = authorsOfLine.filter(function(author) {
+          return author !== originalAuthor;
+        });
+        var lineHasChangeOfThisAuthor = otherAuthorsOfLine.length > 0;
+        return lineHasChangeOfThisAuthor;
+      }).done(function() {
+        var thisAuthor = otherAuthorsOfLine[0];
+        var $changeOfThisAuthor = getLine(lineNumber).find('span.' + thisAuthor);
+        expect($changeOfThisAuthor.text()).to.be(textChange);
+        done();
+      });
     });
   });
 
@@ -81,8 +128,20 @@ describe('Etherpad line attribute tests', function() {
   }
 
   var getLine = function(lineNumber) {
-    return helper.padInner$('div').slice(lineNumber, lineNumber + 1);
+    return helper.padInner$('div').eq(lineNumber);
   }
 
+  var getAuthorFromClassList = function(classes) {
+    return classes.find(function(cls) {
+      return cls.startsWith('author');
+    });
+  }
+
+  // Expire cookie, to make sure it is removed by the browser.
+  // See https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie#Example_4_Reset_the_previous_cookie
+  var removeUserInfo = function() {
+    helper.padChrome$.document.cookie = 'token=foo;expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/p';
+    helper.padChrome$.document.cookie = 'token=foo;expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+  }
 });
 
