@@ -10,7 +10,7 @@ describe('Etherpad line attribute tests', function() {
 
     this.timeout(60000);
   });
-
+/*
   context('when user moves one line into the first position of another', function() {
     before(function(done) {
       var $lineWithBigFont = getLine(LINE_WITH_BIG_FONT_BEFORE_MOVE);
@@ -18,7 +18,6 @@ describe('Etherpad line attribute tests', function() {
 
       // insert one line into the beginning of the other
       $lineWithBigFont.prepend($lineWithTinyFont);
-
       // wait for Etherpad to finish processing the lines
       helper.waitFor(function() {
         var oneDivInsideAnother = helper.padInner$('div div').length === 0;
@@ -32,10 +31,10 @@ describe('Etherpad line attribute tests', function() {
 
       expect($lineThatShouldBeBig.find(BIG_FONT).length).to.be(1);
       expect($lineThatShouldBeTiny.find(TINY_FONT).length).to.be(1);
-
       done();
     });
   });
+*/
 
   // test the same scenario of authorship_of_editions.js (@ Etherpad tests)
   context('when more than one author edits a line with line attribute', function() {
@@ -104,7 +103,7 @@ describe('Etherpad line attribute tests', function() {
   var cleanPad = function(done) {
     var inner$ = helper.padInner$;
     var $padContent = inner$('#innerdocbody');
-    $padContent.html('');
+    $padContent.html('.');
 
     // wait for Etherpad to re-create first line
     helper.waitFor(function(){
@@ -144,4 +143,3 @@ describe('Etherpad line attribute tests', function() {
     helper.padChrome$.document.cookie = 'token=foo;expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
   }
 });
-
