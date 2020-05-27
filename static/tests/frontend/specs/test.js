@@ -48,7 +48,7 @@ describe('Etherpad line attribute tests', function() {
       this.timeout(60000);
     });
 
-    it('marks only the new content as changes of the second user', function(done) {
+    xit('marks only the new content as changes of the second user', function(done) {
       var textChange = 'x';
       var lineNumber = LINE_WITH_BIG_FONT_AFTER_MOVE;
 
