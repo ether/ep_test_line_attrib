@@ -7,7 +7,14 @@
     "email": "lpagliari@gmail.com"
   },
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^7.14.0",
+    "eslint-config-etherpad": "^1.0.8",
+    "eslint-plugin-mocha": "^8.0.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prefer-arrow": "^1.2.2",
+    "eslint-plugin-promise": "^4.2.1"
+  },
   "engines": {
     "node": "*"
   },
@@ -16,5 +23,17 @@
   "repository": {
     "type": "git",
     "url": "git://github.com/ether/ep_test_line_attrib.git"
+  },
+  "funding": {
+    "type": "individual",
+    "url": "http://etherpad.org/"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": "etherpad/plugin"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix ."
   }
 }

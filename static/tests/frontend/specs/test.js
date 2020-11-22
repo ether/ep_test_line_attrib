@@ -1,16 +1,16 @@
-describe('Etherpad line attribute tests', function() {
-  var padId;
+describe('Etherpad line attribute tests', function () {
+  let padId;
 
-  before(function(done) {
-    padId = helper.newPad(function() {
-      cleanPad(function() {
+  before(function (done) {
+    padId = helper.newPad(() => {
+      cleanPad(() => {
         createPad(done);
       });
     });
 
     this.timeout(60000);
   });
-/*
+  /*
   context('when user moves one line into the first position of another', function() {
     before(function(done) {
       var $lineWithBigFont = getLine(LINE_WITH_BIG_FONT_BEFORE_MOVE);
@@ -37,8 +37,8 @@ describe('Etherpad line attribute tests', function() {
 */
 
   // test the same scenario of authorship_of_editions.js (@ Etherpad tests)
-  context('when more than one author edits a line with line attribute', function() {
-    before(function(done) {
+  context('when more than one author edits a line with line attribute', function () {
+    before(function (done) {
       // clean this user info on cookie, so when we refresh it will look like we're someone else
       removeUserInfo();
 
@@ -48,33 +48,31 @@ describe('Etherpad line attribute tests', function() {
       this.timeout(60000);
     });
 
-    xit('marks only the new content as changes of the second user', function(done) {
-      var textChange = 'x';
-      var lineNumber = LINE_WITH_BIG_FONT_AFTER_MOVE;
+    xit('marks only the new content as changes of the second user', function (done) {
+      const textChange = 'x';
+      const lineNumber = LINE_WITH_BIG_FONT_AFTER_MOVE;
 
       // get original author class
-      var classes = getLine(lineNumber).find('span').first().attr('class').split(' ');
-      var originalAuthor = getAuthorFromClassList(classes);
+      const classes = getLine(lineNumber).find('span').first().attr('class').split(' ');
+      const originalAuthor = getAuthorFromClassList(classes);
 
       // make change on target line
-      var $regularLine = getLine(lineNumber);
+      const $regularLine = getLine(lineNumber);
       helper.selectLines($regularLine, $regularLine, 2, 2); // place caret after 2nd char of line
       $regularLine.sendkeys(textChange);
 
       // wait for change to be processed by Etherpad
-      var otherAuthorsOfLine;
-      helper.waitFor(function() {
-        var authorsOfLine = getLine(lineNumber).find('span').map(function() {
+      let otherAuthorsOfLine;
+      helper.waitFor(() => {
+        const authorsOfLine = getLine(lineNumber).find('span').map(function () {
           return getAuthorFromClassList($(this).attr('class').split(' '));
         }).get();
-        otherAuthorsOfLine = authorsOfLine.filter(function(author) {
-          return author !== originalAuthor;
-        });
-        var lineHasChangeOfThisAuthor = otherAuthorsOfLine.length > 0;
+        otherAuthorsOfLine = authorsOfLine.filter((author) => author !== originalAuthor);
+        const lineHasChangeOfThisAuthor = otherAuthorsOfLine.length > 0;
         return lineHasChangeOfThisAuthor;
-      }).done(function() {
-        var thisAuthor = otherAuthorsOfLine[0];
-        var $changeOfThisAuthor = getLine(lineNumber).find('span.' + thisAuthor);
+      }).done(() => {
+        const thisAuthor = otherAuthorsOfLine[0];
+        const $changeOfThisAuthor = getLine(lineNumber).find(`span.${thisAuthor}`);
         expect($changeOfThisAuthor.text()).to.be(textChange);
         done();
       });
@@ -82,64 +80,62 @@ describe('Etherpad line attribute tests', function() {
   });
 
   /* ********************** Helper functions ************************ */
-  var BIG_FONT  = 'big_font';
-  var TINY_FONT = 'tiny_font';
+  const BIG_FONT = 'big_font';
+  const TINY_FONT = 'tiny_font';
 
-  var LINE_WITH_BIG_FONT_BEFORE_MOVE  = 1;
-  var LINE_WITH_TINY_FONT_BEFORE_MOVE = LINE_WITH_BIG_FONT_BEFORE_MOVE + 1;
+  const LINE_WITH_BIG_FONT_BEFORE_MOVE = 1;
+  const LINE_WITH_TINY_FONT_BEFORE_MOVE = LINE_WITH_BIG_FONT_BEFORE_MOVE + 1;
 
   // line with tiny font will be moved to the position of line with big font
-  var LINE_WITH_TINY_FONT_AFTER_MOVE = LINE_WITH_BIG_FONT_BEFORE_MOVE;
-  var LINE_WITH_BIG_FONT_AFTER_MOVE  = LINE_WITH_TINY_FONT_AFTER_MOVE + 1;
+  const LINE_WITH_TINY_FONT_AFTER_MOVE = LINE_WITH_BIG_FONT_BEFORE_MOVE;
+  var LINE_WITH_BIG_FONT_AFTER_MOVE = LINE_WITH_TINY_FONT_AFTER_MOVE + 1;
 
-  var padContent = function() {
-    var pad = '<br>'
-            + '<' + BIG_FONT + '>Big line</' + BIG_FONT + '><br>'
-            + '<' + TINY_FONT + '>Tiny line</' + TINY_FONT + '><br>'
-            + '<br>';
+  const padContent = function () {
+    const pad = `${'<br>' +
+            '<'}${BIG_FONT}>Big line</${BIG_FONT}><br>` +
+            `<${TINY_FONT}>Tiny line</${TINY_FONT}><br>` +
+            '<br>';
     return pad;
-  }
+  };
 
-  var cleanPad = function(done) {
-    var inner$ = helper.padInner$;
-    var $padContent = inner$('#innerdocbody');
+  var cleanPad = function (done) {
+    const inner$ = helper.padInner$;
+    const $padContent = inner$('#innerdocbody');
     $padContent.html('.');
 
     // wait for Etherpad to re-create first line
-    helper.waitFor(function(){
-      var numberOfLinesOnPad = inner$('div').length;
+    helper.waitFor(() => {
+      const numberOfLinesOnPad = inner$('div').length;
       return numberOfLinesOnPad === 1;
     }, 2000).done(done);
-  }
+  };
 
-  var createPad = function(done) {
-    var inner$ = helper.padInner$;
+  var createPad = function (done) {
+    const inner$ = helper.padInner$;
 
     // set pad content
-    var $firstLine = inner$('div').first();
+    const $firstLine = inner$('div').first();
     $firstLine.html(padContent());
 
     // wait for Etherpad to finish processing the lines
-    helper.waitFor(function() {
-      var numberOfLinesOnPad = inner$('div').length;
+    helper.waitFor(() => {
+      const numberOfLinesOnPad = inner$('div').length;
       return numberOfLinesOnPad > 1;
     }, 2000).done(done);
-  }
+  };
 
-  var getLine = function(lineNumber) {
+  var getLine = function (lineNumber) {
     return helper.padInner$('div').eq(lineNumber);
-  }
+  };
 
-  var getAuthorFromClassList = function(classes) {
-    return classes.find(function(cls) {
-      return cls.startsWith('author');
-    });
-  }
+  var getAuthorFromClassList = function (classes) {
+    return classes.find((cls) => cls.startsWith('author'));
+  };
 
   // Expire cookie, to make sure it is removed by the browser.
   // See https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie#Example_4_Reset_the_previous_cookie
-  var removeUserInfo = function() {
+  var removeUserInfo = function () {
     helper.padChrome$.document.cookie = 'token=foo;expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/p';
     helper.padChrome$.document.cookie = 'token=foo;expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
-  }
+  };
 });
