@@ -1,4 +1,6 @@
-exports.collectContentPre = function (hook, context) {
+'use strict';
+
+exports.collectContentPre = (hook, context) => {
   const tagName = context.tname;
   const lineAttributes = context.state.lineAttributes;
 

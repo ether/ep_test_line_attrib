@@ -1,20 +1,18 @@
-exports.aceEditorCSS = function () {
-  return ['ep_test_line_attrib/static/css/editor.css'];
-};
+'use strict';
 
-exports.aceRegisterBlockElements = function () {
-  return ['big_font', 'tiny_font'];
-};
+exports.aceEditorCSS = () => ['ep_test_line_attrib/static/css/editor.css'];
+
+exports.aceRegisterBlockElements = () => ['big_font', 'tiny_font'];
 
 // Our attribute will result in a 'test_line_attrib:(...)' class
-exports.aceAttribsToClasses = function (hook, context) {
-  if (context.key == 'test_line_attrib') {
+exports.aceAttribsToClasses = (hook, context) => {
+  if (context.key === 'test_line_attrib') {
     return [`test_line_attrib:${context.value}`];
   }
 };
 
 // Here we convert the class 'test_line_attrib:(...)' into a tag
-exports.aceDomLineProcessLineAttributes = function (name, context) {
+exports.aceDomLineProcessLineAttributes = (name, context) => {
   const cls = context.cls;
   const lineType = /(?:^| )test_line_attrib:([a-z_]*)/.exec(cls);
 

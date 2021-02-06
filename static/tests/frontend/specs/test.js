@@ -1,3 +1,5 @@
+'use strict';
+
 describe('Etherpad line attribute tests', function () {
   let padId;
 
@@ -84,11 +86,10 @@ describe('Etherpad line attribute tests', function () {
   const TINY_FONT = 'tiny_font';
 
   const LINE_WITH_BIG_FONT_BEFORE_MOVE = 1;
-  const LINE_WITH_TINY_FONT_BEFORE_MOVE = LINE_WITH_BIG_FONT_BEFORE_MOVE + 1;
 
   // line with tiny font will be moved to the position of line with big font
   const LINE_WITH_TINY_FONT_AFTER_MOVE = LINE_WITH_BIG_FONT_BEFORE_MOVE;
-  var LINE_WITH_BIG_FONT_AFTER_MOVE = LINE_WITH_TINY_FONT_AFTER_MOVE + 1;
+  const LINE_WITH_BIG_FONT_AFTER_MOVE = LINE_WITH_TINY_FONT_AFTER_MOVE + 1;
 
   const padContent = function () {
     const pad = `${'<br>' +
@@ -98,7 +99,7 @@ describe('Etherpad line attribute tests', function () {
     return pad;
   };
 
-  var cleanPad = function (done) {
+  const cleanPad = function (done) {
     const inner$ = helper.padInner$;
     const $padContent = inner$('#innerdocbody');
     $padContent.html('.');
@@ -110,7 +111,7 @@ describe('Etherpad line attribute tests', function () {
     }, 2000).done(done);
   };
 
-  var createPad = function (done) {
+  const createPad = function (done) {
     const inner$ = helper.padInner$;
 
     // set pad content
@@ -124,17 +125,17 @@ describe('Etherpad line attribute tests', function () {
     }, 2000).done(done);
   };
 
-  var getLine = function (lineNumber) {
+  const getLine = function (lineNumber) {
     return helper.padInner$('div').eq(lineNumber);
   };
 
-  var getAuthorFromClassList = function (classes) {
+  const getAuthorFromClassList = function (classes) {
     return classes.find((cls) => cls.startsWith('author'));
   };
 
   // Expire cookie, to make sure it is removed by the browser.
   // See https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie#Example_4_Reset_the_previous_cookie
-  var removeUserInfo = function () {
+  const removeUserInfo = function () {
     helper.padChrome$.document.cookie = 'token=foo;expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/p';
     helper.padChrome$.document.cookie = 'token=foo;expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
   };

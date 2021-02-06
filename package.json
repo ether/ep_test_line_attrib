@@ -18,7 +18,7 @@
     "eslint-plugin-you-dont-need-lodash-underscore": "^6.10.0"
   },
   "engines": {
-    "node": "*"
+    "node": ">=10.17.1"
   },
   "license": "Apache-2.0",
   "homepage": "https://github.com/ether/ep_test_line_attrib",
