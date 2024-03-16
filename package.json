@@ -1,7 +1,7 @@
 {
   "description": "Etherpad plugin to allow tests for line attributes on the core code of Etherpad",
   "name": "ep_test_line_attrib",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "author": {
     "name": "Luiza Pagliari",
     "email": "lpagliari@gmail.com"
