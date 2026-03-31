@@ -1,16 +1,15 @@
 {
   "description": "Etherpad plugin to allow tests for line attributes on the core code of Etherpad",
   "name": "ep_test_line_attrib",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "author": {
     "name": "Luiza Pagliari",
     "email": "lpagliari@gmail.com"
   },
-  "dependencies": {},
   "devDependencies": {
-    "eslint": "^8.57.0",
+    "eslint": "^8.57.1",
     "eslint-config-etherpad": "^4.0.4",
-    "typescript": "^5.4.2"
+    "typescript": "^5.9.3"
   },
   "engines": {
     "node": ">=18.0.0"
