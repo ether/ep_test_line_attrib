@@ -1,4 +1,4 @@
-![Publish Status](https://github.com/ether/ep_test_line_attrib/workflows/Node.js%20Package/badge.svg) ![Backend Tests Status](https://github.com/ether/ep_test_line_attrib/workflows/Backend%20tests/badge.svg)
+![Publish Status](https://github.com/ether/ep_test_line_attrib/workflows/Node.js%20Package/badge.svg) [![Backend Tests Status](https://github.com/ether/ep_test_line_attrib/actions/workflows/test-and-release.yml/badge.svg)](https://github.com/ether/ep_test_line_attrib/actions/workflows/test-and-release.yml)
 
 # ep_test_line_attrib
 Etherpad plugin to allow tests for line attributes on the core code of Etherpad.
