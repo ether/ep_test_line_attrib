@@ -18,7 +18,7 @@
   "homepage": "https://github.com/ether/ep_test_line_attrib",
   "repository": {
     "type": "git",
-    "url": "git://github.com/ether/ep_test_line_attrib.git"
+    "url": "https://github.com/ether/ep_test_line_attrib.git"
   },
   "funding": {
     "type": "individual",
