@@ -1,6 +1,6 @@
 ![Publish Status](https://github.com/ether/ep_test_line_attrib/workflows/Node.js%20Package/badge.svg) [![Backend Tests Status](https://github.com/ether/ep_test_line_attrib/actions/workflows/test-and-release.yml/badge.svg)](https://github.com/ether/ep_test_line_attrib/actions/workflows/test-and-release.yml)
 
-# ep_test_line_attrib
+# Line Attribute Test Plugin for Etherpad
 Etherpad plugin to allow tests for line attributes on the core code of Etherpad.
 
 **This plugin does nothing on production environment, it is supposed to be used only to run tests related to line attributes on Etherpad core code!!**
