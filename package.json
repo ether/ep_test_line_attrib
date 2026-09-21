@@ -7,7 +7,7 @@
     "email": "lpagliari@gmail.com"
   },
   "devDependencies": {
-    "eslint": "^8.57.1",
+    "eslint": "^10.10.0",
     "eslint-config-etherpad": "^5.0.0",
     "typescript": "~6.0.3"
   },
